@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>足球傷害預防與治療查詢網頁 - 資深中醫、物理治療師與骨科醫生指南</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;     /* 藍 - 專業信任 */
+            --secondary: #10b981;   /* 綠 - 健康復原 */
+            --accent: #f59e0b;      /* 琥珀 - 警示/重點 */
+            --bg: #f8fafc;          /* 淺灰藍 - 背景 */
+            --card: #ffffff;        /* 純白卡片 */
+            --text: #1e293b;        /* 深灰藍文字 */
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 20px rgba(0,0,0,0.06);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans TC', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem 0;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .logo i { color: var(--secondary); font-size: 2.2rem; }
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .nav-links a i { font-size: 1.1rem; }
+
+        /* Search Bar */
+        .search-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        .search-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .search-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+        .section-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .section-header {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 1.5rem 2rem;
+            font-weight: 600;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-header i { font-size: 1.6rem; }
+
+        /* Table Styling */
+        .injury-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        .injury-table th {
+            background: #f1f5f9;
+            color: var(--text);
+            font-weight: 600;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+        }
+        .injury-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            transition: var(--transition);
+        }
+        .injury-table tr:hover {
+            background: #f8fafc;
+        }
+        .injury-name {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .injury-en {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        .image-link, .youtube-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .image-link {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        .image-link:hover {
+            background: #bfdbfe;
+            transform: translateY(-1px);
+        }
+        .youtube-link {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .youtube-link:hover {
+            background: #fecaca;
+            transform: translateY(-1px);
+        }
+        .label {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .treatment-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { flex-direction: column; }
+            .nav-links a { justify-content: center; }
+            .search-container { flex-direction: column; }
+            .search-box { min-width: 100%; }
+            .injury-table { font-size: 0.85rem; }
+            .injury-table td, .injury-table th { padding: 0.75rem 0.5rem; }
+            .logo { font-size: 1.5rem; }
+            .logo i { font-size: 1.8rem; }
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 1px solid #f59e0b;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+            color: #92400e;
+        }
+        .disclaimer h2 {
+            color: #d97706;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-futbol"></i>
+                <span>足球傷害防治中心</span>
+            </div>
+            <p class="subtitle">
+                 <strong>整合中醫 + 物理治療 + 骨科</strong> 資料、<br>
+                中西醫方案，專為足球運動員設計<br>
+                <strong>所有圖片與 YouTube 連結，來源優先 : Mayo Clinic、Physio-pedia、KT Tape 官方、E3 Rehab、Bob & Brad 等頻道。</strong>
+            </p>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <div class="nav-links">
+                <a href="#lower" class="active"><i class="fas fa-running"></i> 下肢 11 種</a>
+                <a href="#upper"><i class="fas fa-hand-paper"></i> 上肢 10 種</a>
+                <a href="#core"><i class="fas fa-shield-alt"></i> 核心 10 種</a>
+                <a href="#knee"><i class="fas fa-knee"></i> 膝蓋 13 種</a>
+
+            </div>
+        </nav>
+
+        <!-- Search -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="搜尋傷害名稱（如：ACL、跟腱、肩袖、哈格蘭、足底）..." onkeyup="searchTable()">
+            </div>
+            <button class="search-btn" onclick="searchTable()">
+                <i class="fas fa-search"></i> 立即搜尋
+            </button>
+        </div>
+
+        <!-- ==================================== 下肢 11 種傷害 ==================================== -->
+        <div class="section-card" id="lower">
+            <div class="section-header">
+                <i class="fas fa-running"></i>
+                下肢 11 種常見傷害
+            </div>
+            <table class="injury-table">
+                <thead>
+                    <tr>
+                        <th>傷害名稱</th>
+                        <th>預防方法</th>
+                        <th>治療方案</th>
+                        <th>復健訓練</th>
+                        <th>運動肌肉貼布</th>
+                        <th>影音示範</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="injury-name">踝關節扭傷</div>
+                            <div class="injury-en">Ankle Sprain</div>
+                            <a href="https://www.physio-pedia.com/Ankle_Sprain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>平衡板訓練、FIFA 11+ 熱身、穿高筒鞋</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸崑崙、太溪 + 活血化瘀膏</div>
+                            <div class="treatment-item"><span class="label">物理</span>RICE + 超音波 + 踝泵運動</div>
+                            <div class="treatment-item"><span class="label">骨科</span>支架固定，嚴重者 MRI</div>
+                        </td>
+                        <td>單腳站立閉眼 3組×30秒 + 平衡墊側移</td>
+                        <td>Kinesio Tape：踝關節「籃球貼法」<br>（抑制外翻，50%張力）</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=IEfyCfCtIJA" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=gGwHZDjktUU" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 肌肉貼布教學
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">腿筋拉傷</div>
+                            <div class="injury-en">Hamstring Strain</div>
+                            <a href="https://www.physio-pedia.com/Hamstring_Strain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>Nordic Curl 預防、動態伸展、避免冷啟動</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>艾灸承山 + 舒筋活血湯</div>
+                            <div class="treatment-item"><span class="label">物理</span>泡沫滾筒 + 離心訓練</div>
+                            <div class="treatment-item"><span class="label">骨科</span>PRRT 評估，Grade III 需手術</div>
+                        </td>
+                        <td>Nordic Hamstring Curl 進階版 3組×8次（緩降3秒）</td>
+                        <td>Kinesio Tape：腿筋「I形抑制貼」<br>（從坐骨至膝後，30%張力）</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=_e9vFU9-tkc" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> Nordic Curl
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=ai_SaERZw78" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 腿筋肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">脛骨壓力症候群</div>
+                            <div class="injury-en">Shin Splints</div>
+                            <a href="https://www.physio-pedia.com/Medial_Tibial_Stress_Syndrome" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>漸進跑量、矯正鞋墊、強化脛前肌</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>刮痧 + 透骨草熱敷</div>
+                            <div class="treatment-item"><span class="label">物理</span>低強度雷射 + 足弓支撐</div>
+                            <div class="treatment-item"><span class="label">骨科</span>休息 4-6 週</div>
+                        </td>
+                        <td>腳趾行走 + 脛前肌離心下降 3組×15次</td>
+                        <td>Kinesio Tape：小腿前側「減壓貼」<br>（沿脛骨走向，輕張力）</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=olpUrL-w2qg" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=T_lC3ohXy98" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 小腿肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">小腿拉傷</div>
+                            <div class="injury-en">Calf Strain</div>
+                            <a href="https://www.physio-pedia.com/Gastrocnemius_Tendinopathy" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>漸進加速、強化腓腸肌、穿合腳鞋</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>刮痧承山 + 透骨草</div>
+                            <div class="treatment-item"><span class="label">物理</span>離心下降 + 按摩</div>
+                            <div class="treatment-item"><span class="label">骨科</span>休息 + 影像檢查</div>
+                        </td>
+                        <td>小腿離心下降 3組×15次</td>
+                        <td>Kinesio Tape：小腿「I形支撐貼」<br>（從膝下至踝，30%張力）</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=HHOTw_8T3QQ" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=elvYXZUEMDo" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 小腿肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">足底筋膜炎</div>
+                            <div class="injury-en">Plantar Fasciitis</div>
+                            <a href="https://www.mayoclinic.org/diseases-conditions/plantar-fasciitis/multimedia/plantar-fasciitis/img-20006161" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>足弓支撐鞋墊、夜間足背伸展、避免赤腳</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸太衝 + 推拿足跟</div>
+                            <div class="treatment-item"><span class="label">物理</span>滾球按摩 + 超音波</div>
+                            <div class="treatment-item"><span class="label">骨科</span>夜間夾板，嚴重者 PRP</div>
+                        </td>
+                        <td>足底滾球 + 腳趾抓毛巾 3組×20次</td>
+                        <td>Kinesio Tape：足底「低染料貼法」<br>（從足跟至趾，40%張力）</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=PVjSq5thUhE" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=8jk4Yz4P0AU" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 足底肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">跟腱炎</div>
+                            <div class="injury-en">Achilles Tendinitis</div>
+                            <a href="https://www.mayoclinic.org/diseases-conditions/achilles-tendinitis/symptoms-causes/syc-20369020" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>漸進負重、避免過度背屈</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>艾灸昆侖</div>
+                            <div class="treatment-item"><span class="label">物理</span>離心下降蹲</div>
+                            <div class="treatment-item"><span class="label">骨科</span>震波治療</div>
+                        </td>
+                        <td>Eccentric Heel Drop 3組×15次</td>
+                        <td>Kinesio Tape：跟腱「減壓貼」</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=qqAlt1k_-gs" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=gGwHZDjktUU" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 跟腱肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">股四頭肌拉傷</div>
+                            <div class="injury-en">Quadriceps Strain</div>
+                            <a href="https://www.physio-pedia.com/Quadriceps_Muscle_Strain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>動態熱身、避免急加速</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>活血化瘀</div>
+                            <div class="treatment-item"><span class="label">物理</span>泡沫滾筒</div>
+                            <div class="treatment-item"><span class="label">骨科</span>MRI評估</div>
+                        </td>
+                        <td>直腿抬高 3組×12次</td>
+                        <td>Kinesio Tape：大腿前側「抑制貼」</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=IEfyCfCtIJA" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=gGwHZDjktUU" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 大腿肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">髂脛束症候群</div>
+                            <div class="injury-en">IT Band Syndrome</div>
+                            <a href="https://www.physio-pedia.com/Iliotibial_Band_Syndrome" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>強化臀中肌、避免過度內旋</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>推拿風市</div>
+                            <div class="treatment-item"><span class="label">物理</span>泡沫滾筒</div>
+                            <div class="treatment-item"><span class="label">骨科</span>局部注射</div>
+                        </td>
+                        <td>側臥抬腿 3組×15次</td>
+                        <td>Kinesio Tape：ITB「減壓貼」</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=olpUrL-w2qg" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=T_lC3ohXy98" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> ITB肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">膝後肌拉傷</div>
+                            <div class="injury-en">Popliteus Strain</div>
+                            <a href="https://www.physio-pedia.com/Popliteus_Injury" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>強化膝後肌群、避免膝過伸</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>艾灸委中</div>
+                            <div class="treatment-item"><span class="label">物理</span>超音波</div>
+                            <div class="treatment-item"><span class="label">骨科</span>MRI</div>
+                        </td>
+                        <td>膝後伸展 3組×10秒</td>
+                        <td>Kinesio Tape：膝後「Y形抑制貼」</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=2rs2m5v7N3M" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=YmIVGfQHzbI" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 膕肌肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">脛前肌綜合症</div>
+                            <div class="injury-en">Anterior Compartment Syndrome</div>
+                            <a href="https://www.physio-pedia.com/Compartment_Syndrome" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>漸進訓練、避免過度背屈</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>活血通絡</div>
+                            <div class="treatment-item"><span class="label">物理</span>按摩</div>
+                            <div class="treatment-item"><span class="label">骨科</span>壓力測試</div>
+                        </td>
+                        <td>腳趾上抬 3組×20次</td>
+                        <td>Kinesio Tape：小腿前側「減壓貼」</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=olpUrL-w2qg" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=T_lC3ohXy98" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 小腿前肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">哈格蘭骨棘症候群</div>
+                            <div class="injury-en">Haglund's Syndrome</div>
+                            <a href="https://www.physio-pedia.com/Haglund%27s_deformity" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>穿合腳後跟鞋、避免硬底鞋、足弓支撐鞋墊</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸昆侖 + 透骨草熱敷</div>
+                            <div class="treatment-item"><span class="label">物理</span>跟腱伸展 + 冰敷 + 超音波</div>
+                            <div class="treatment-item"><span class="label">骨科</span>X光確認骨棘，嚴重者手術切除</div>
+                        </td>
+                        <td>跟腱離心下降（雙腳）3組×15次 + 小腿後側滾筒</td>
+                        <td>Kinesio Tape：跟腱上方「減壓貼」+ 後跟墊高貼<br>（從跟骨至小腿，30%張力）</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=SH_SGeKXyMs" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=jydtU7A_v6Q" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 肌肉貼布教學
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ==================================== 上肢 10 種傷害 ==================================== -->
+        <div class="section-card" id="upper">
+            <div class="section-header">
+                <i class="fas fa-hand-paper"></i>
+                上肢 10 種常見傷害
+            </div>
+            <table class="injury-table">
+                <thead>
+                    <tr>
+                        <th>傷害名稱</th>
+                        <th>預防方法</th>
+                        <th>治療方案</th>
+                        <th>復健訓練</th>
+                        <th>運動肌肉貼布</th>
+                        <th>影音示範</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="injury-name">肩關節脫臼</div>
+                            <div class="injury-en">Shoulder Dislocation</div>
+                            <a href="https://www.physio-pedia.com/Shoulder_Dislocation" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>肩袖強化、避免手臂過伸</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>推拿肩井</div>
+                            <div class="treatment-item"><span class="label">物理</span>旋轉肌袖訓練</div>
+                            <div class="treatment-item"><span class="label">骨科</span>手法復位</div>
+                        </td>
+                        <td>外旋彈力帶 3組×12次</td>
+                        <td>Kinesio Tape：肩峰「Y形穩定貼」</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=AB1TWySCpVA" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=-Nwv9se70F0" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 肩關節肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">手腕扭傷</div>
+                            <div class="injury-en">Wrist Sprain</div>
+                            <a href="https://www.physio-pedia.com/Wrist_Sprain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>戴護腕、強化前臂</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸陽池</div>
+                            <div class="treatment-item"><span class="label">物理</span>固定 + 超音波</div>
+                            <div class="treatment-item"><span class="label">骨科</span>X光</div>
+                        </td>
+                        <td>手腕屈伸 3組×15次</td>
+                        <td>Kinesio Tape：手腕「8字環繞貼」</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=VorsPCKKmCg" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=CE5SPzk0Zcs" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 手腕肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">網球肘</div>
+                            <div class="injury-en">Tennis Elbow</div>
+                            <a href="https://www.physio-pedia.com/Lateral_Epicondylitis" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>正確傳球、避免過度握球</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸曲池</div>
+                            <div class="treatment-item"><span class="label">物理</span>離心伸腕</div>
+                            <div class="treatment-item"><span class="label">骨科</span>PRP</div>
+                        </td>
+                        <td>Eccentric Wrist Extension 3組×15次</td>
+                        <td>Kinesio Tape：前臂「扇形減壓貼」</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=NExFfXSe2Mc" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=UErMovRiC3Y" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 肘部肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">肩峰撞擊症</div>
+                            <div class="injury-en">Shoulder Impingement</div>
+                            <a href="https://www.physio-pedia.com/Shoulder_Impingement_Syndrome" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>強化肩袖、避免過頭動作</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸肩井</div>
+                            <div class="treatment-item"><span class="label">物理</span>旋轉訓練</div>
+                            <div class="treatment-item"><span class="label">骨科</span>影像檢查</div>
+                        </td>
+                        <td>肩外旋 3組×12次</td>
+                        <td>Kinesio Tape：肩關節穩定貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=AB1TWySCpVA" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=-Nwv9se70F0" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 肩肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">肱二頭肌腱炎</div>
+                            <div class="injury-en">Biceps Tendinitis</div>
+                            <a href="https://www.physio-pedia.com/Biceps_Tendinopathy" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>漸進負重、熱身充分</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>推拿天泉</div>
+                            <div class="treatment-item"><span class="label">物理</span>等長收縮</div>
+                            <div class="treatment-item"><span class="label">骨科</span>超音波</div>
+                        </td>
+                        <td>等長彎舉 3組×10秒</td>
+                        <td>Kinesio Tape：二頭肌抑制貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=VorsPCKKmCg" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=CE5SPzk0Zcs" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 手臂肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">尺骨撞擊症候群</div>
+                            <div class="injury-en">Cubital Tunnel Syndrome</div>
+                            <a href="https://www.physio-pedia.com/Cubital_Tunnel_Syndrome" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>避免肘過伸、正確姿勢</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸少海</div>
+                            <div class="treatment-item"><span class="label">物理</span>神經滑動</div>
+                            <div class="treatment-item"><span class="label">骨科</span>EMG測試</div>
+                        </td>
+                        <td>神經滑動運動 3組×10次</td>
+                        <td>Kinesio Tape：肘神經減壓貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=NExFfXSe2Mc" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=UErMovRiC3Y" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 肘肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">腕隧道症候群</div>
+                            <div class="injury-en">Carpal Tunnel Syndrome</div>
+                            <a href="https://www.mayoclinic.org/diseases-conditions/carpal-tunnel-syndrome/multimedia/carpal-tunnel-syndrome/img-20006521" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>手腕支撐、避免重複動作</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸內關</div>
+                            <div class="treatment-item"><span class="label">物理</span>夜間夾板</div>
+                            <div class="treatment-item"><span class="label">骨科</span>手術釋放</div>
+                        </td>
+                        <td>手腕伸展 3組×20秒</td>
+                        <td>Kinesio Tape：腕隧道減壓貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=VorsPCKKmCg" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=CE5SPzk0Zcs" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 手腕肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">指關節扭傷</div>
+                            <div class="injury-en">Finger Sprain</div>
+                            <a href="https://www.physio-pedia.com/Finger_Sprain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>戴護指、強化握力</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>推拿商陽</div>
+                            <div class="treatment-item"><span class="label">物理</span>Buddy Taping</div>
+                            <div class="treatment-item"><span class="label">骨科</span>X光</div>
+                        </td>
+                        <td>手指屈伸 3組×15次</td>
+                        <td>Kinesio Tape：手指 Buddy 貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=NExFfXSe2Mc" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=UErMovRiC3Y" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 手指肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">肘內上髁炎</div>
+                            <div class="injury-en">Medial Epicondylitis</div>
+                            <a href="https://www.physio-pedia.com/Medial_Epicondylitis" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>避免過度內旋、強化前臂</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸手三里</div>
+                            <div class="treatment-item"><span class="label">物理</span>離心訓練</div>
+                            <div class="treatment-item"><span class="label">骨科</span>注射</div>
+                        </td>
+                        <td>前臂屈肌離心 3組×15次</td>
+                        <td>Kinesio Tape：肘內側減壓貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=VorsPCKKmCg" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=CE5SPzk0Zcs" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 肘肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">旋轉袖撕裂</div>
+                            <div class="injury-en">Rotator Cuff Tear</div>
+                            <a href="https://www.physio-pedia.com/Rotator_Cuff_Tear" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>漸進肩訓、避免負重過頭</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>艾灸肩髎</div>
+                            <div class="treatment-item"><span class="label">物理</span>強化訓練</div>
+                            <div class="treatment-item"><span class="label">骨科</span>手術修復</div>
+                        </td>
+                        <td>肩外旋等長 3組×10秒</td>
+                        <td>Kinesio Tape：旋轉袖穩定貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=AB1TWySCpVA" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=-Nwv9se70F0" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 肩肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ==================================== 核心 10 種傷害 ==================================== -->
+        <div class="section-card" id="core">
+            <div class="section-header">
+                <i class="fas fa-shield-alt"></i>
+                核心 10 種常見傷害
+            </div>
+            <table class="injury-table">
+                <thead>
+                    <tr>
+                        <th>傷害名稱</th>
+                        <th>預防方法</th>
+                        <th>治療方案</th>
+                        <th>復健訓練</th>
+                        <th>運動肌肉貼布</th>
+                        <th>影音示範</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="injury-name">腹股溝拉傷</div>
+                            <div class="injury-en">Groin Strain</div>
+                            <a href="https://www.physio-pedia.com/Adductor_Strain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>髖內收強化、動態伸展</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>艾灸氣海</div>
+                            <div class="treatment-item"><span class="label">物理</span>Copenhagen</div>
+                            <div class="treatment-item"><span class="label">骨科</span>超音波</div>
+                        </td>
+                        <td>Copenhagen Plank 3組×20秒/側</td>
+                        <td>Kinesio Tape：腹股溝「Y形支撐貼」</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=YANA2VJeJRY" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=wPKEfmJgs4s" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 腹股溝肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">下背痛</div>
+                            <div class="injury-en">Lower Back Pain</div>
+                            <a href="https://www.mayoclinic.org/diseases-conditions/back-pain/multimedia/low-back-pain/img-20007967" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>核心穩定、正確姿勢</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>推拿腎俞</div>
+                            <div class="treatment-item"><span class="label">物理</span>麥肯基伸展</div>
+                            <div class="treatment-item"><span class="label">骨科</span>X光</div>
+                        </td>
+                        <td>Dead Bug 3組×12次/側</td>
+                        <td>Kinesio Tape：腰椎「H形穩定貼」</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=DxIeqiyYZkQ" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=N30sIWy57Bo" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 腰部肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">腹直肌損傷</div>
+                            <div class="injury-en">Rectus Abdominis Strain</div>
+                            <a href="https://www.physio-pedia.com/Abdominal_Muscle_Strain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>漸進核心、避免過度捲腹</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸中脘</div>
+                            <div class="treatment-item"><span class="label">物理</span>超音波</div>
+                            <div class="treatment-item"><span class="label">骨科</span>休息</div>
+                        </td>
+                        <td>Russian Twist 3組×15次</td>
+                        <td>Kinesio Tape：腹直肌「I形抑制貼」</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=lDnH9Nh8st8" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=GcOhelZduo4" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 腹部肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">髖屈肌拉傷</div>
+                            <div class="injury-en">Hip Flexor Strain</div>
+                            <a href="https://www.physio-pedia.com/Hip_Flexor_Strain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>髖伸展、漸進踢腿</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>艾灸髖部</div>
+                            <div class="treatment-item"><span class="label">物理</span>伸展訓練</div>
+                            <div class="treatment-item"><span class="label">骨科</span>MRI</div>
+                        </td>
+                        <td>髖屈肌伸展 3組×20秒</td>
+                        <td>Kinesio Tape：髖前抑制貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=YANA2VJeJRY" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=wPKEfmJgs4s" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 髖肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">骨盆傾斜</div>
+                            <div class="injury-en">Pelvic Tilt</div>
+                            <a href="https://www.physio-pedia.com/Pelvic_Tilt" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>核心平衡、姿勢矯正</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>推拿腰部</div>
+                            <div class="treatment-item"><span class="label">物理</span>骨盆穩定</div>
+                            <div class="treatment-item"><span class="label">骨科</span>評估</div>
+                        </td>
+                        <td>骨盆橋 3組×12次</td>
+                        <td>Kinesio Tape：骨盆穩定貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=DxIeqiyYZkQ" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=N30sIWy57Bo" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 骨盆肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">腹壁疝氣</div>
+                            <div class="injury-en">Abdominal Hernia</div>
+                            <a href="https://www.mayoclinic.org/diseases-conditions/inguinal-hernia/multimedia/inguinal-hernia/img-20006161" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>避免重物、核心強化</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>補氣湯</div>
+                            <div class="treatment-item"><span class="label">物理</span>支撐帶</div>
+                            <div class="treatment-item"><span class="label">骨科</span>手術</div>
+                        </td>
+                        <td>輕核心訓練 3組×10次</td>
+                        <td>Kinesio Tape：腹壁支撐貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=lDnH9Nh8st8" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=GcOhelZduo4" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 腹壁肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">肋間肌拉傷</div>
+                            <div class="injury-en">Intercostal Strain</div>
+                            <a href="https://www.physio-pedia.com/Intercostal_Muscle_Strain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>呼吸訓練、避免扭轉</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸肺俞</div>
+                            <div class="treatment-item"><span class="label">物理</span>呼吸運動</div>
+                            <div class="treatment-item"><span class="label">骨科</span>X光</div>
+                        </td>
+                        <td>側彎伸展 3組×20秒</td>
+                        <td>Kinesio Tape：肋間減壓貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=YANA2VJeJRY" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=wPKEfmJgs4s" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 肋間肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">腰椎小關節症候群</div>
+                            <div class="injury-en">Lumbar Facet Syndrome</div>
+                            <a href="https://www.physio-pedia.com/Facet_Joint_Syndrome" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>脊柱穩定、避免彎腰</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>艾灸腰陽關</div>
+                            <div class="treatment-item"><span class="label">物理</span>關節鬆動</div>
+                            <div class="treatment-item"><span class="label">骨科</span>注射</div>
+                        </td>
+                        <td>腰椎穩定 3組×12次</td>
+                        <td>Kinesio Tape：腰椎穩定貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=DxIeqiyYZkQ" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=N30sIWy57Bo" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 腰椎肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">骶髂關節功能障礙</div>
+                            <div class="injury-en">SI Joint Dysfunction</div>
+                            <a href="https://www.physio-pedia.com/Sacroiliac_joint_dysfunction" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>骨盆穩定訓練、避免單側負重</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>推拿長強</div>
+                            <div class="treatment-item"><span class="label">物理</span>關節矯正</div>
+                            <div class="treatment-item"><span class="label">骨科</span>影像</div>
+                        </td>
+                        <td>SI關節運動 3組×10次</td>
+                        <td>Kinesio Tape：骶髂穩定貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=lDnH9Nh8st8" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=GcOhelZduo4" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> SI肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">腹外斜肌撕裂</div>
+                            <div class="injury-en">External Oblique Tear</div>
+                            <a href="https://www.physio-pedia.com/Oblique_Muscle_Strain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>漸進扭轉、強化腹斜肌</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸天樞</div>
+                            <div class="treatment-item"><span class="label">物理</span>超音波</div>
+                            <div class="treatment-item"><span class="label">骨科</span>休息</div>
+                        </td>
+                        <td>側橋 3組×30秒</td>
+                        <td>Kinesio Tape：腹斜肌抑制貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=YANA2VJeJRY" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=wPKEfmJgs4s" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 腹斜肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ==================================== 膝蓋周圍 13 種傷害 ==================================== -->
+        <div class="section-card" id="knee">
+            <div class="section-header">
+                <i class="fas fa-knee"></i>
+                膝蓋周圍 13 種常見傷害
+            </div>
+            <table class="injury-table">
+                <thead>
+                    <tr>
+                        <th>傷害名稱</th>
+                        <th>預防方法</th>
+                        <th>治療方案</th>
+                        <th>復健訓練</th>
+                        <th>運動肌肉貼布</th>
+                        <th>影音示範</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="injury-name">前十字韌帶撕裂</div>
+                            <div class="injury-en">ACL Tear</div>
+                            <a href="https://www.mayoclinic.org/diseases-conditions/acl-injury/multimedia/acl-injury/img-20008783" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>FIFA 11+、落地控制、強化膕肌</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>活血化瘀 + 針灸膝眼</div>
+                            <div class="treatment-item"><span class="label">物理</span>術後 CPM</div>
+                            <div class="treatment-item"><span class="label">骨科</span>關節鏡重建</div>
+                        </td>
+                        <td>單腿橋 3組×12次</td>
+                        <td>Kinesio Tape：膝前 X 形穩定貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=U8cRRN5Z4X0" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 術後復健
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=UZiLovE193A" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> ACL 肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">內側副韌帶扭傷</div>
+                            <div class="injury-en">MCL Sprain</div>
+                            <a href="https://www.physio-pedia.com/Medial_Collateral_Ligament_Sprain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>避免側撞、強化內側肌群</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>三七膏</div>
+                            <div class="treatment-item"><span class="label">物理</span>支架 + 側向穩定</div>
+                            <div class="treatment-item"><span class="label">骨科</span>保守治療</div>
+                        </td>
+                        <td>側弓步 3組×10次/側</td>
+                        <td>Kinesio Tape：內側 I 形抑制貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=0IsR6LHFJJw" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=5yL-ruW0odQ" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> MCL 肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">半月板撕裂</div>
+                            <div class="injury-en">Meniscus Tear</div>
+                            <a href="https://www.physio-pedia.com/Meniscal_Tear" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>正確著地、避免扭轉</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>艾灸梁丘</div>
+                            <div class="treatment-item"><span class="label">物理</span>關節鬆動術</div>
+                            <div class="treatment-item"><span class="label">骨科</span>關節鏡修補</div>
+                        </td>
+                        <td>膝伸展等長收縮 3組×10秒</td>
+                        <td>Kinesio Tape：膝周環繞減壓貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=Rr0g_b8Neq4" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=IkQFK9-fWx4" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 膝蓋環繞貼
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">髕骨疼痛症候群</div>
+                            <div class="injury-en">PFPS</div>
+                            <a href="https://www.physio-pedia.com/Patellofemoral_Pain_Syndrome" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>強化 VMO、避免深蹲過低</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>牛膝伸筋草</div>
+                            <div class="treatment-item"><span class="label">物理</span>McConnell 肌肉貼布</div>
+                            <div class="treatment-item"><span class="label">骨科</span>影像評估</div>
+                        </td>
+                        <td>終端膝伸展 3組×15次</td>
+                        <td>McConnell Tape：髕骨內移定位</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=rRRV9MfGIFE" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=WfjAZkH1NDY" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> McConnell 貼法
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">後十字韌帶損傷</div>
+                            <div class="injury-en">PCL Injury</div>
+                            <a href="https://www.physio-pedia.com/Posterior_Cruciate_Ligament_Injury" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>核心穩定、避免膝前衝擊</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>杜仲續斷</div>
+                            <div class="treatment-item"><span class="label">物理</span>後鏈強化</div>
+                            <div class="treatment-item"><span class="label">骨科</span>保守或重建</div>
+                        </td>
+                        <td>單腿羅馬尼亞硬舉 3組×12次</td>
+                        <td>Kinesio Tape：膝後 Y 形支撐貼</td>
+                        <td>
+                            <a href="https://www.youtube Jumbo.com/watch?v=EAdbnfBCylE" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=ac9K9bSzTck" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> PCL 肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">外側副韌帶扭傷</div>
+                            <div class="injury-en">LCL Sprain</div>
+                            <a href="https://www.physio-pedia.com/Lateral_Collateral_Ligament_Sprain" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>平衡訓練、強化外側肌</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>活血化瘀</div>
+                            <div class="treatment-item"><span class="label">物理</span>支架固定</div>
+                            <div class="treatment-item"><span class="label">骨科</span>MRI評估</div>
+                        </td>
+                        <td>側向弓步 3組×10次</td>
+                        <td>Kinesio Tape：外側 I 形穩定貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=0IsR6LHFJJw" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=5yL-ruW0odQ" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> LCL 肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">髕腱炎</div>
+                            <div class="injury-en">Patellar Tendinitis</div>
+                            <a href="https://www.physio-pedia.com/Patellar_Tendinopathy" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>漸進負重、避免跳躍過量</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>艾灸膝陽關</div>
+                            <div class="treatment-item"><span class="label">物理</span>離心蹲</div>
+                            <div class="treatment-item"><span class="label">骨科</span>震波治療</div>
+                        </td>
+                        <td>Spanish Squat 3組×15次</td>
+                        <td>Kinesio Tape：髕腱減壓貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=2O8i8kR3t7M" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=6i8lJ1Z6k3Q" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 髕腱肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">鵝足滑囊炎</div>
+                            <div class="injury-en">Pes Anserine Bursitis</div>
+                            <a href="https://www.physio-pedia.com/Pes_Anserinus_Bursitis" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>強化內收肌、避免內翻</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>刮痧血海</div>
+                            <div class="treatment-item"><span class="label">物理</span>冰敷 + 超音波</div>
+                            <div class="treatment-item"><span class="label">骨科</span>局部注射</div>
+                        </td>
+                        <td>內收肌伸展 3組×20秒</td>
+                        <td>Kinesio Tape：鵝足減壓貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=YANA2VJeJRY" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=wPKEfmJgs4s" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 鵝足肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">髂脛束摩擦症候群</div>
+                            <div class="injury-en">ITBS (Knee)</div>
+                            <a href="https://www.physio-pedia.com/Iliotibial_Band_Syndrome" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>強化臀中肌、避免過度內旋</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>推拿風市</div>
+                            <div class="treatment-item"><span class="label">物理</span>泡沫滾筒</div>
+                            <div class="treatment-item"><span class="label">骨科</span>注射</div>
+                        </td>
+                        <td>側臥抬腿 3組×15次</td>
+                        <td>Kinesio Tape：ITB 膝端減壓貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=olpUrL-w2qg" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=T_lC3ohXy98" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> ITB 肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">膝關節積液</div>
+                            <div class="injury-en">Knee Effusion</div>
+                            <a href="https://www.physio-pedia.com/Knee_Effusion" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>避免過度負重、控制炎症</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>利水消腫</div>
+                            <div class="treatment-item"><span class="label">物理</span>RICE + 壓迫</div>
+                            <div class="treatment-item"><span class="label">骨科</span>抽液</div>
+                        </td>
+                        <td>踝泵 + 直腿抬高 3組×20次</td>
+                        <td>Kinesio Tape：膝周淋巴引流貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=U8cRRN5Z4X0" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=UZiLovE193A" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 膝積液肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">髕骨脫臼</div>
+                            <div class="injury-en">Patellar Dislocation</div>
+                            <a href="https://www.physio-pedia.com/Patellar_Dislocation" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>強化 VMO、避免外翻</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>正骨復位</div>
+                            <div class="treatment-item"><span class="label">物理</span>支架固定</div>
+                            <div class="treatment-item"><span class="label">骨科</span>手術穩定</div>
+                        </td>
+                        <td>終端膝伸展 3組×15次</td>
+                        <td>McConnell Tape：髕骨內移貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=rRRV9MfGIFE" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=WfjAZkH1NDY" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 髕骨肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">膝內側皺襞症候群</div>
+                            <div class="injury-en">Plica Syndrome</div>
+                            <a href="https://www.physio-pedia.com/Medial_Plica_Syndrome" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>避免過度屈膝、漸進訓練</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>針灸膝眼</div>
+                            <div class="treatment-item"><span class="label">物理</span>伸展 + 超音波</div>
+                            <div class="treatment-item"><span class="label">骨科</span>關節鏡切除</div>
+                        </td>
+                        <td>膝伸展活動 3組×15次</td>
+                        <td>Kinesio Tape：膝內側減壓貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=0IsR6LHFJJw" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=5yL-ruW0odQ" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 皺襞肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="injury-name">膝骨性關節炎</div>
+                            <div class="injury-en">Knee Osteoarthritis</div>
+                            <a href="https://www.mayoclinic.org/diseases-conditions/osteoarthritis/multimedia/knee-osteoarthritis/img-20008076" class="image-link" target="_blank">
+                                <i class="fas fa-image"></i> 傷害位置
+                            </a>
+                        </td>
+                        <td>體重控制、低衝擊運動</td>
+                        <td>
+                            <div class="treatment-item"><span class="label">中醫</span>杜仲巴戟</div>
+                            <div class="treatment-item"><span class="label">物理</span>水療 + 關節鬆動</div>
+                            <div class="treatment-item"><span class="label">骨科</span>PRP / 置換</div>
+                        </td>
+                        <td>水中踏步 3組×2分鐘</td>
+                        <td>Kinesio Tape：膝周卸載貼</td>
+                        <td>
+                            <a href="https://www.youtube.com/watch?v=Rr0g_b8Neq4" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 復健訓練
+                            </a>
+                            <a href="https://www.youtube.com/watch?v=IkQFK9-fWx4" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> 關節炎肌肉貼布
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 免責聲明 -->
+        <div id="disclaimer" class="disclaimer">
+            <h2><i class="fas fa-exclamation-triangle"></i> 重要免責聲明</h2>
+            <p><strong>Grok 不是醫生</strong>。本網頁僅供教育參考，所有治療建議需由合格醫師評估後執行。運動貼與訓練影片為示範用途，執行前請諮詢專業物理治療師。急性傷害請立即就醫，勿延誤。</p>
+        </div>
+
+        <footer>
+            <p>© 2025 足球傷害防治中心 | 由 Grok 技術驅動 |</p>
+        </footer>
+    </div>
+
+    <script>
+        function searchTable() {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toLowerCase();
+            const tables = document.querySelectorAll(".injury-table");
+            tables.forEach(table => {
+                const rows = table.querySelectorAll("tbody tr");
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(filter) ? "" : "none";
+                });
+            });
+        }
+
+        // 導覽列點擊效果
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
